@@ -10,17 +10,18 @@ Este proyecto es un backend en **.NET Core** para una aplicación de gestión de
 - 🔎 Filtrar tareas por estado (Pendientes/Completadas)
 
 ## 🏗️ Tecnologías Utilizadas
-- **.NET Core 6/7**
+- **.NET Core 8**
 - **Entity Framework Core** (Base de datos en memoria)
 - **C#**
 - **Swagger** (para documentación de la API)
+- **Docker** (para despliegue en Render)
 
 ---
 ## 📦 Instalación y Configuración
 
 ### **1️⃣ Clonar el repositorio**
 ```sh
-git clone https://github.com/crvini/Task-backend
+git clone https://github.com/crvini/Task-backend.git
 cd task-backend
 ```
 
@@ -30,19 +31,18 @@ dotnet restore
 ```
 
 ---
-## ▶️ Ejecución
+## ▶️ Ejecución con Docker
 
-### **1️⃣ Correr el servidor localmente**
+### **1️⃣ Construir la imagen Docker**
 ```sh
-dotnet run
+docker build -t task-backend .
 ```
-El servidor se ejecutará en `http://localhost:5000` o `https://localhost:5001`
 
-### **2️⃣ Probar la API con Swagger**
-Después de iniciar el servidor, puedes acceder a la documentación de la API en:
+### **2️⃣ Ejecutar el contenedor**
 ```sh
-http://localhost:5000/swagger
+docker run -p 8080:8080 task-backend
 ```
+El backend se ejecutará en `http://localhost:8080`
 
 ---
 ## 📂 Estructura del Proyecto
@@ -56,6 +56,7 @@ Task-backend/
 │── appsettings.json
 │── Program.cs
 │── Startup.cs
+│── Dockerfile
 ```
 
 ---
@@ -70,20 +71,26 @@ Task-backend/
 | DELETE | `/api/tasks/{id}`  | Eliminar una tarea         |
 
 ---
-## 🌍 Despliegue en Render
+## 🌍 Despliegue en Render con Docker
 1️⃣ **Subir el código a GitHub**
 ```sh
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/crvini/Task-backend
+git remote add origin https://github.com/crvini/Task-backend.git
 git push -u origin main
 ```
 
 2️⃣ **Ir a [Render](https://render.com)** y crear un "New Web Service".
 3️⃣ **Configurar el servicio** con los siguientes comandos:
-   - Build Command: `dotnet restore && dotnet build`
-   - Start Command: `dotnet run`
+   - **Dockerfile Path:** `./Dockerfile`
+   - **Instance Type:** `Free`
 4️⃣ **Hacer clic en "Deploy" y obtener la URL pública**.
+
+---
+## 🔗 Verificar la API en Producción
+Puedes probar la API desplegada en Render accediendo a:
+
+🔹 **Swagger UI:** [https://task-backend-h2eb.onrender.com/swagger/index.html](https://task-backend-h2eb.onrender.com/swagger/index.html)
 
 ---
